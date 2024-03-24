@@ -10,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +34,7 @@ public class AuthenticationService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private TokenService tokenService;
+    private JWTService jwtService;
 
     public ApplicationUser registerUser(String username, String password) {
         String encodedPassword = passwordEncoder.encode(password);
@@ -49,7 +48,7 @@ public class AuthenticationService {
         try {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password));
-            String token = tokenService.generateJwt(auth);
+            String token = jwtService.generateJwt(auth);
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
         } catch (AuthenticationException e) {
             return new LoginResponseDTO(null, "");

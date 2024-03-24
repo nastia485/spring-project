@@ -1,5 +1,6 @@
 package com.project.springproject.utils;
 
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import java.security.KeyPair;
@@ -19,6 +20,7 @@ public class RSAKeyProperties {
 
     public RSAPublicKey getPublicKey() {
         return publicKey;
+
     }
 
     public void setPublicKey(RSAPublicKey publicKey) {

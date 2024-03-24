@@ -7,6 +7,7 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.project.springproject.utils.RSAKeyProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,6 +43,9 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
+//    @Autowired
+//    JwtAuthFilter jwtAuthFilter;
+
     @Bean
     public AuthenticationManager authManager(UserDetailsService detailsService) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -57,6 +61,7 @@ public class SecurityConfiguration {
                 .csrf((csrf -> csrf.disable()))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/**").permitAll();
+                    auth.requestMatchers("/account/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                     auth.anyRequest().authenticated();
@@ -69,6 +74,12 @@ public class SecurityConfiguration {
 //                .jwt()
 //                .jwtAuthenticationConverter();
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//        http.formLogin(
+//                form -> form
+//                        .loginPage("/auth/login"));
+//                        .loginProcessingUrl("/login")
+//                        .defaultSuccessUrl("/account")
+//                        .permitAll());
         return http.build();
 
     }
