@@ -69,17 +69,7 @@ public class SecurityConfiguration {
         http.oauth2ResourceServer((oauth2) -> oauth2
                 .jwt(Customizer.withDefaults())
         );
-//        http
-//                .oauth2ResourceServer()
-//                .jwt()
-//                .jwtAuthenticationConverter();
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//        http.formLogin(
-//                form -> form
-//                        .loginPage("/auth/login"));
-//                        .loginProcessingUrl("/login")
-//                        .defaultSuccessUrl("/account")
-//                        .permitAll());
         return http.build();
 
     }

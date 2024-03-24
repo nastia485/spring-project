@@ -39,25 +39,12 @@ public class AuthenticationController {
         return authenticationService.registerUser(body.getUsername(), body.getPassword());
     }
 
-//    @PostMapping("/login")
-//    public LoginResponseDTO loginUser(@RequestBody RegistrationDTO body){
-//        return authenticationService.loginUser(body.getUsername(), body.getPassword());
-//    }
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("authRequestDTO", new AuthRequestDTO());
         return "auth";
     }
-
-//    @ResponseBody
-//    @PostMapping("/token")
-//    public AuthRequestDTO login(@ModelAttribute("authRequestDTO") AuthRequestDTO authRequestDTO){
-//        System.out.println("Login submitted");
-//        System.out.println(authRequestDTO);
-//        return authRequestDTO;
-//    }
-
 
     @ResponseBody
     @PostMapping("/token")
@@ -78,10 +65,6 @@ public class AuthenticationController {
             JwtResponseDTO jwtResponseDTO = new JwtResponseDTO(accessToken, refreshToken.getToken());
             System.out.println(jwtResponseDTO);
             return jwtResponseDTO;
-//            return JwtResponseDTO.builder()
-//                    .accessToken(accessToken)
-//                    .token(refreshToken.getToken()).build();
-            //return "redirect:/home";
 
         } else {
             throw new UsernameNotFoundException("invalid user request..!!");
