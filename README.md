@@ -1,1 +1,1 @@
-Project with JWT authentication
+Pet-project with JWT authentication
